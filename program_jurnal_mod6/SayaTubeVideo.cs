@@ -23,7 +23,7 @@ namespace program_jurnal_mod6
         }
         public void IncreasePlayCount(int playCount)
         {
-            Debug.Assert(playCount > 0 && playCount < 10000000, "Tidak dapat menambah play count terlalu banyak");
+            Debug.Assert(playCount > 0 && playCount < 25000000, "Tidak dapat menambah play count terlalu banyak");
             try
             {
                 this.playCount = checked(this.playCount + playCount);

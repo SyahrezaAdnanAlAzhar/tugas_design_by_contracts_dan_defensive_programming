@@ -16,7 +16,7 @@ namespace program_jurnal_mod6
         public SayaTubeUser(string username)
         {
             Debug.Assert(username != null && username.Length <= 100, "Username tidak sesuai dengan ketentuan");
-            this.Username = username;
+            this.Username = checked(username);
             this.uploadedVideos = new List<SayaTubeVideo>();
             Random random = new Random();
             this.id = random.Next(10000, 100000);
@@ -34,7 +34,15 @@ namespace program_jurnal_mod6
 
         public void AddVideo(SayaTubeVideo video)
         {
-            uploadedVideos.Add(video);
+            try
+            {
+                Debug.Assert(video != null && video.getPlayCount() < int.MaxValue);
+                uploadedVideos.Add(video);
+            }
+            catch (OverflowException)
+            {
+                throw new OverflowException("Jumlah play count melebihi batas");
+            }
         }
 
         public void PrintAllVideoPlayCount()
@@ -43,6 +51,9 @@ namespace program_jurnal_mod6
             for (int i = 0; i < uploadedVideos.Count; i++)
             {
                 Console.WriteLine("Video " + (i+1) + " judul: " + uploadedVideos[i].getTitle());
+                if (i == 7) {
+                    break;
+                }
             }
         }
     }
